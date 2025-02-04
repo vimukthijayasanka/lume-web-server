@@ -1,7 +1,7 @@
 # Lume Web Server 🚀
 
 ## 🌟 Overview
-The **DEP Web Server** is a simple HTTP server implemented in Java using sockets. It demonstrates the fundamental concepts of **client-server architecture**, particularly how to handle **HTTP requests** and serve static files.
+The **Lume Web Server** is a simple HTTP server implemented in Java using sockets. It demonstrates the fundamental concepts of **client-server architecture**, particularly how to handle **HTTP requests** and serve static files.
 
 ## 🔥 Features
 ✅ Accepts incoming HTTP connections on **port 80**.  
@@ -11,7 +11,7 @@ The **DEP Web Server** is a simple HTTP server implemented in Java using sockets
 ✅ Uses **multithreading** to handle multiple clients concurrently.
 
 ## 🛠 Technologies Used
-- **Java 17+** ☕
+- **Java 22+** ☕
 - **Java Sockets API** 🔌
 - **Java NIO (FileChannel, ByteBuffer)** 📂
 - **Multithreading** 🧵
@@ -46,16 +46,16 @@ nslookup mylocalserver.dev
 ## 📥 Installation
 1. Clone the repository:
    ```sh
-   git clone https://github.com/yourusername/dep-web-server.git
-   cd dep-web-server
+   git clone https://github.com/vimukthijayasanka/lume-web-server
+   cd lume-web-server
    ```
 2. Compile the project:
    ```sh
-   javac -d out src/lk/ijse/dep/server/ServerApp.java
+   javac -d out src/lk/ijse/dep13/lume/LumeServer.java
    ```
 3. Run the server:
    ```sh
-   sudo java -cp out lk.ijse.dep.server.ServerApp  # Run as admin
+   sudo java -cp out lk.ijse.dep13.lume.LumeServer  # Run as admin
    ```
 
 ## ⚙️ How It Works
@@ -89,13 +89,13 @@ Host: localhost
 ### 📤 Server Response (Success)
 ```
 HTTP/1.1 200 OK
-Server: dep-server
+Server: lume-server
 Date: Mon, 04 Feb 2025 12:00:00 GMT
 Content-Type: text/html
 
 <html>
 <head><title>Welcome</title></head>
-<body><h1>Hello from DEP Server!</h1></body>
+<body><h1>Hello from Lume Server!</h1></body>
 </html>
 ```
 
@@ -109,5 +109,5 @@ Content-Type: text/html
 Pull requests are welcome. Please follow the standard GitHub **fork and PR workflow**.
 
 ## 📜 License
-This project is open-source and licensed under the **MIT License**.
+This project is open-source and licensed under the [**License**](https://github.com/vimukthijayasanka/lume-web-server/blob/main/license.txt).
 
