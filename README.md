@@ -1,4 +1,4 @@
-# DEP Web Server 🚀
+# Lume Web Server 🚀
 
 ## 🌟 Overview
 The **DEP Web Server** is a simple HTTP server implemented in Java using sockets. It demonstrates the fundamental concepts of **client-server architecture**, particularly how to handle **HTTP requests** and serve static files.
