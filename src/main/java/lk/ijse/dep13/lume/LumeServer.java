@@ -42,7 +42,20 @@ public class LumeServer {
             String command = array[0];
             String resourcePath = array[1];
             System.out.println(command + " " + resourcePath);
-            
+
+            String host = null;
+            String line;
+            while ((line = reader.readLine()) != null && !line.isBlank()) {
+                String header = line.split(":")[0].strip();
+                String value = line.substring(line.indexOf(":") + 1).strip();
+                if (header == null) return;
+                if (header.equalsIgnoreCase("host")) {
+                    host = value;
+                }
+            }
+            System.out.println("host name : " + host);
+            System.out.println("command : " + command);
+            System.out.println("resource path : " + resourcePath);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
