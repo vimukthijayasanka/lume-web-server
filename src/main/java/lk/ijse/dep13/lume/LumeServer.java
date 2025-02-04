@@ -1,14 +1,13 @@
 package lk.ijse.dep13.lume;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.time.LocalDateTime;
 
 public class LumeServer {
     private static Socket localSocket;
+    private static String command;
 
     public static void main(String[] args) {
         try {
@@ -39,7 +38,7 @@ public class LumeServer {
 
             String cmdLine = reader.readLine();
             String[] array = cmdLine.split(" ");
-            String command = array[0];
+            command = array[0];
             String resourcePath = array[1];
             System.out.println(command + " " + resourcePath);
 
@@ -60,6 +59,47 @@ public class LumeServer {
             throw new RuntimeException(e);
         }
 
+    }
+
+    private void writeHttpResponse(){
+        OutputStream os = null;
+        try {
+             os = localSocket.getOutputStream();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+
+        if (!command.equalsIgnoreCase("GET")){
+            String response = """
+                    HTTP/1.1 405 Method Not Allowed
+                    server: Lume Server
+                    Date: %s
+                    content-type: text/html
+                    
+                    """.formatted(LocalDateTime.now());
+            try {
+                os.write(response.getBytes());
+                os.flush();
+                String responseBody = """
+                        <!DOCTYPE html>
+                        <html>
+                        <head>
+                        <meta charset="UTF-8">
+                        <title>Dep Server | 404 Method Not allowed</title>
+                        </head>
+                        <body>
+                        <h1>Dep Server doesn't support %s method</h1>
+                        </body>
+                        </html>
+                        """.formatted(command);
+                os.write(responseBody.getBytes());
+                os.flush();
+                os.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
 }
