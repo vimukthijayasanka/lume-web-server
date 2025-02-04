@@ -12,6 +12,14 @@ public class LumeServer {
             while (true) {
                 Socket localSocket = serverSocket.accept();
                 System.out.println("connection accepted from " + localSocket.getRemoteSocketAddress());
+
+                new Thread(() -> {
+                    try{
+                        
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }).start();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
