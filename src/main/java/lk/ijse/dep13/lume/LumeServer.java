@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 public class LumeServer {
     private static Socket localSocket;
     private static String command;
+    private static String host;
 
     public static void main(String[] args) {
         try {
@@ -19,7 +20,8 @@ public class LumeServer {
 
                 new Thread(() -> {
                     try{
-                        
+                        readHttpRequest();
+                        writeHttpResponse();
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -30,7 +32,8 @@ public class LumeServer {
         }
     }
 
-    private void readHttpRequest(){
+
+    private static void readHttpRequest(){
         try {
             InputStream is = localSocket.getInputStream();
             InputStreamReader isr = new InputStreamReader(is);
@@ -42,7 +45,7 @@ public class LumeServer {
             String resourcePath = array[1];
             System.out.println(command + " " + resourcePath);
 
-            String host = null;
+            host = null;
             String line;
             while ((line = reader.readLine()) != null && !line.isBlank()) {
                 String header = line.split(":")[0].strip();
@@ -61,7 +64,7 @@ public class LumeServer {
 
     }
 
-    private void writeHttpResponse(){
+    private static void writeHttpResponse(){
         OutputStream os = null;
         try {
              os = localSocket.getOutputStream();
@@ -100,6 +103,48 @@ public class LumeServer {
                 throw new RuntimeException(e);
             }
         }
+
+        // checking host
+        if (host == null) {
+            String httpResponseHead = """
+                                HTTP/1.1 404 Not Found
+                                server: Lume-server
+                                Date: %s
+                                content-type: text/html
+                                
+                                """.formatted(LocalDateTime.now());
+            try {
+                os.write(httpResponseHead.getBytes());
+                os.flush();
+                String responseBody = """
+                                <!DOCTYPE html>
+                                <html>
+                                <head>
+                                <title>Lume Server | 404 Not Found </title>
+                                </head>
+                                <body>
+                                <h1>Dep Server cannot find the Host Name %s</h1>
+                                </body>
+                                </html>
+                                """.formatted(host);
+                os.write(responseBody.getBytes());
+                os.flush();
+                os.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
+    private static void sendResponseHeader(OutputStream os, int statusCode, String statusMessage, String contentType) throws IOException {
+        String response = """
+                HTTP/1.1 %d %s
+                Server: Lume Server
+                Date: %s
+                content-type: %s
+                
+                """.formatted(statusCode, statusMessage, LocalDateTime.now(),contentType);
+        os.write(response.getBytes());
+        os.flush();
+    }
 }
