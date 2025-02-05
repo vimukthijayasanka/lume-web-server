@@ -3,6 +3,11 @@ package lk.ijse.dep13.lume;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 
 public class LumeServer {
@@ -72,68 +77,28 @@ public class LumeServer {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
+    }
 
-        if (!command.equalsIgnoreCase("GET")){
-            String response = """
-                    HTTP/1.1 405 Method Not Allowed
-                    server: Lume Server
-                    Date: %s
-                    content-type: text/html
-                    
-                    """.formatted(LocalDateTime.now());
-            try {
-                os.write(response.getBytes());
-                os.flush();
-                String responseBody = """
-                        <!DOCTYPE html>
-                        <html>
-                        <head>
-                        <meta charset="UTF-8">
-                        <title>Dep Server | 404 Method Not allowed</title>
-                        </head>
-                        <body>
-                        <h1>Dep Server doesn't support %s method</h1>
-                        </body>
-                        </html>
-                        """.formatted(command);
-                os.write(responseBody.getBytes());
-                os.flush();
-                os.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+    private static void serveResource(OutputStream os, String host, String resourcePath) throws IOException {
+        Path path = resourcePath.equals("/") ? Paths.get(host, "index.html") : Paths.get(host, resourcePath);
+
+        if (!Files.exists(path)) {
+            sendErrorResponse(os,404,"Resource Not Found", "Lume Server doesn't have request content");
+            return;
         }
 
-        // checking host
-        if (host == null) {
-            String httpResponseHead = """
-                                HTTP/1.1 404 Not Found
-                                server: Lume-server
-                                Date: %s
-                                content-type: text/html
-                                
-                                """.formatted(LocalDateTime.now());
-            try {
-                os.write(httpResponseHead.getBytes());
-                os.flush();
-                String responseBody = """
-                                <!DOCTYPE html>
-                                <html>
-                                <head>
-                                <title>Lume Server | 404 Not Found </title>
-                                </head>
-                                <body>
-                                <h1>Dep Server cannot find the Host Name %s</h1>
-                                </body>
-                                </html>
-                                """.formatted(host);
-                os.write(responseBody.getBytes());
-                os.flush();
-                os.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+        String contentType = Files.probeContentType(path);
+        sendResponseHeader(os,200, "OK", contentType);
+
+        try(FileChannel fileChannel = FileChannel.open(path)){
+            ByteBuffer buffer = ByteBuffer.allocate(1024);
+            while (fileChannel.read(buffer) != -1) {
+                buffer.flip();
+                os.write(buffer.array(), 0, buffer.limit());
+                buffer.clear();
             }
         }
+        os.flush();
     }
 
     private static void sendResponseHeader(OutputStream os, int statusCode, String statusMessage, String contentType) throws IOException {
