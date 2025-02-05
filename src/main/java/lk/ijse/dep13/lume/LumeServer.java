@@ -147,4 +147,17 @@ public class LumeServer {
         os.write(response.getBytes());
         os.flush();
     }
+
+    private static void sendErrorResponse(OutputStream os, int statusCode, String statusMessage, String errorMessage) throws IOException {
+        sendResponseHeader(os, statusCode, statusMessage, "text/html");
+        String responseBody = """
+                <!DOCTYPE html>
+                <html>
+                <head><title>Lume Server | %d %s</title></head>
+                <body><h1>%s</h1></body>
+                </html>
+                """.formatted(statusCode, statusMessage, errorMessage);
+        os.write(responseBody.getBytes());
+        os.flush();
+    }
 }
