@@ -76,7 +76,7 @@ public class LumeServer {
         Path path = resourcePath.equals("/") ? Paths.get(host, "index.html") : Paths.get(host, resourcePath);
 
         if (!Files.exists(path)) {
-            sendErrorResponse(os,404,"Resource Not Found", "Lume Server doesn't have request content");
+            sendErrorResponse(os,404,"Resource Not Found", "The requested URL %s was not found on this server.".formatted(resourcePath));
             return;
         }
 
@@ -109,35 +109,28 @@ public class LumeServer {
     private static void sendErrorResponse(OutputStream os, int statusCode, String statusMessage, String errorMessage) throws IOException {
         sendResponseHeader(os, statusCode, statusMessage, "text/html");
         String responseBody = """
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Lume Server | %d %s</title>
-                <style>
-                body{
-                font-family= Arial, sans-serif;
-                color: black;
-                background-color: white;
-                }
-                h1{
-                font-width: bold:
-                font-size: 16px;
-                color: black;
-                }
-                img { width: 200px; }
-                <style>
-                </head>
-                <body>
-                <div class="error-container">
-                <img src="https://i.imgur.com/Q2k38kU.png" alt="Broken Robot">
-                <h1>%s</h1>
-                <p>That's all we know.</p>
-                </div>
-                </body>
-                </html>
-                """.formatted(statusCode, statusMessage, errorMessage);
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Lume Server | %d %s</title>
+        </head>
+        <body style="margin: 50px auto 0; max-width: 390px; min-height: 180px; padding: 30px 0 15px; font: 15px/22px Montserrat, sans-serif; background: #fff; color: #222; padding: 15px;">
+
+            <p style="margin: 11px 0 22px;">
+                <b>%s</b>
+                <ins style="color: #777; text-decoration: none;">That's an error</ins>
+            </p>
+
+            <p style="margin: 11px 0 22px;">
+                %s
+                <ins style="color: #777;">That's all we know</ins>
+            </p>
+
+        </body>
+        </html>
+        """.formatted(statusCode, statusMessage, statusCode, errorMessage);
         os.write(responseBody.getBytes());
         os.flush();
     }
