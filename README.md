@@ -37,6 +37,7 @@ notepad C:\\Windows\\System32\\drivers\\etc\\hosts  # Windows
 Add a line:
 ```
 127.0.0.1    machan.lk
+127.0.0.1    google.lume
 ```
 Then use `nslookup` to verify:
 ```sh
@@ -107,6 +108,10 @@ Content-Type: text/html
 
 ## 🤝 Contributing
 Pull requests are welcome. Please follow the standard GitHub **fork and PR workflow**.
+
+## 🏷️ Version
+
+0.2.0
 
 ## 📜 License
 This project is open-source and licensed under the [**License**](https://github.com/vimukthijayasanka/lume-web-server/blob/main/license.txt).
