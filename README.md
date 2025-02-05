@@ -84,7 +84,7 @@ nslookup mylocalserver.dev
 ### 📨 Client Request
 ```
 GET /index.html HTTP/1.1
-Host: localhost
+Host: google.lume
 ```
 
 ### 📤 Server Response (Success)
@@ -111,7 +111,7 @@ Pull requests are welcome. Please follow the standard GitHub **fork and PR workf
 
 ## 🏷️ Version
 
-0.2.0
+1.0.0
 
 ## 📜 License
 This project is open-source and licensed under the [**License**](https://github.com/vimukthijayasanka/lume-web-server/blob/main/license.txt).
