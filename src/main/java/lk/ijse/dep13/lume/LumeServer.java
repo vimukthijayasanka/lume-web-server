@@ -110,9 +110,32 @@ public class LumeServer {
         sendResponseHeader(os, statusCode, statusMessage, "text/html");
         String responseBody = """
                 <!DOCTYPE html>
-                <html>
-                <head><title>Lume Server | %d %s</title></head>
-                <body><h1>%s</h1></body>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Lume Server | %d %s</title>
+                <style>
+                body{
+                font-family= Arial, sans-serif;
+                color: black;
+                background-color: white;
+                }
+                h1{
+                font-width: bold:
+                font-size: 16px;
+                color: black;
+                }
+                img { width: 200px; }
+                <style>
+                </head>
+                <body>
+                <div class="error-container">
+                <img src="https://i.imgur.com/Q2k38kU.png" alt="Broken Robot">
+                <h1>%s</h1>
+                <p>That's all we know.</p>
+                </div>
+                </body>
                 </html>
                 """.formatted(statusCode, statusMessage, errorMessage);
         os.write(responseBody.getBytes());
