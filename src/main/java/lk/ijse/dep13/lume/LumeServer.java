@@ -11,26 +11,18 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 
 public class LumeServer {
-    private static Socket localSocket;
-    private static String command;
-    private static String host;
 
     public static void main(String[] args) {
         try {
             ServerSocket serverSocket = new ServerSocket(80);
             System.out.println("Lume Server waiting for connection...");
+
             while (true) {
-                localSocket = serverSocket.accept();
+                Socket localSocket = serverSocket.accept();
                 System.out.println("connection accepted from " + localSocket.getRemoteSocketAddress());
 
-                new Thread(() -> {
-                    try{
-                        readHttpRequest();
-                        writeHttpResponse();
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                }).start();
+                // handle the clientRequest
+                new Thread(() -> handleClient(localSocket)).start();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -38,45 +30,46 @@ public class LumeServer {
     }
 
 
-    private static void readHttpRequest(){
-        try {
-            InputStream is = localSocket.getInputStream();
-            InputStreamReader isr = new InputStreamReader(is);
-            BufferedReader reader = new BufferedReader(isr);
+  private static void handleClient(Socket socket){
+        try(InputStream is = socket.getInputStream();
+            OutputStream os = socket.getOutputStream()){
 
-            String cmdLine = reader.readLine();
-            String[] array = cmdLine.split(" ");
-            command = array[0];
-            String resourcePath = array[1];
-            System.out.println(command + " " + resourcePath);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            String requestLine = reader.readLine();
+            if (requestLine == null) return;
 
-            host = null;
-            String line;
-            while ((line = reader.readLine()) != null && !line.isBlank()) {
-                String header = line.split(":")[0].strip();
-                String value = line.substring(line.indexOf(":") + 1).strip();
-                if (header == null) return;
-                if (header.equalsIgnoreCase("host")) {
-                    host = value;
-                }
+            String[] requestParts = requestLine.split(" ");
+            if (requestParts.length < 2) return;
+
+            String method = requestParts[0];
+            String resourcePath = requestParts[1];
+
+            String host = getHost(reader);
+            System.out.println("Host: " + host + " Method: " + method + " ResourcePath: " + resourcePath);
+
+            if (!method.equalsIgnoreCase("GET")){
+                sendErrorResponse(os,405, "Method Not Allowed", "Lume Server doesn't support " + method);
+                return;
             }
-            System.out.println("host name : " + host);
-            System.out.println("command : " + command);
-            System.out.println("resource path : " + resourcePath);
+            if (host == null){
+                sendErrorResponse(os, 404, "Not Found", "Lume Server cannot find the Host Name");
+                return;
+            }
+            serveResource(os, host, resourcePath);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Connection error: " + e.getMessage());
         }
+  }
 
-    }
-
-    private static void writeHttpResponse(){
-        OutputStream os = null;
-        try {
-             os = localSocket.getOutputStream();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException(e);
+    private static String getHost(BufferedReader reader) throws IOException {
+        String line;
+        while ((line = reader.readLine()) != null && !line.isBlank()) {
+            String[] headerParts = line.split(":",2);
+            if (headerParts.length == 2 && headerParts[0].trim().equalsIgnoreCase("host")) {
+                return headerParts[1].trim();
+            }
         }
+        return null;
     }
 
     private static void serveResource(OutputStream os, String host, String resourcePath) throws IOException {
