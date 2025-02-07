@@ -5,30 +5,42 @@
 }
 
 body {
+    height: 100%;
+    min-width: 400px;
     display: flex;
     background-color: white;
     font-family: Arial, sans-serif;
 }
 
 #container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
     width: 100%;
     text-align: center;
+    min-height: 100vh;
 }
 
 #top-bar {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    width: 100%;
-    height: 60px;
-    padding: 10px 20px;
-    background-color: transparent;
+    max-height: 60px;
+    padding: 6px;
 }
 
 #header {
     display: flex;
     align-items: center;
-    gap: 16px;
+
+    .gmail, .images{
+        padding-right: 11px;
+    }
+
+    .gmail:hover, .images:hover{
+        text-decoration: underline;
+    }
 }
 
 #header a {
@@ -37,47 +49,60 @@ body {
     color: rgba(0,0,0,.87);
 }
 
-.search-labs img {
+.apps{
+    border-radius: 50%;
     width: 40px;
     height: 40px;
+    background-color: transparent;
+    align-content: center;
+}
+
+.apps:hover{
+    opacity: 1;
+    cursor: pointer;
+    background-color: rgba(60,64,67,.08);
+}
+
+#header .apps span{
+    color: #444746;
 }
 
 .sign-in-button {
-    font-family: Roboto,Helvetica,Arial,sans-serif;
+    margin: 12px 16px 12px 10px;
     font-size: 14px;
-    font-weight: 500;
     color: white;
     background-color: #0b57d0;
     border: none;
     border-radius: 100px;
-    padding: 10px 20px;
     cursor: pointer;
     min-height: 40px;
     min-width: 85px;
-    outline: none;
-    text-align: center;
-    text-decoration: none;
-    white-space: normal;
-    line-height: 18px;
-    position: relative;
     transition: opacity .5s cubic-bezier(0, 0, 0.92, -0.09);
 }
 
 .sign-in-button:hover {
     background-color: #0b57d0;
     box-shadow: 0 1px 2px 0 rgba(0,0,0,.3),0 1px 3px 1px rgba(0,0,0,.15);
+    cursor: pointer;
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,.3),0 1px 3px 1px rgba(0,0,0,.15);
+    opacity: 0.8;
+    transition: opacity .5s ease-out;
 }
 
 #container-1{
-    min-height: 150px;
+    min-height: 92px;
     height: calc(100% - 560px);
+    flex-grow: 1;
     max-height: 290px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    box-sizing: border-box;
 
     #google-logo {
+        display: block;
         max-height: 92px;
+        height: 100%;
         position: relative;
         margin-top: auto;
     }
@@ -89,61 +114,57 @@ body {
         object-position: center bottom;
         height: 92px;
         aspect-ratio: auto 272 / 92;
-        width: 272px;
+        width: auto;
         overflow: clip;
         overflow-clip-margin: border-box;
     }
 }
 
-
 #container-2{
     padding: 20px;
     max-height: 160px;
     display: block;
+    flex-shrink: 0;
+    box-sizing: border-box;
 
     #search {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 120px;
-        flex: 1;
-        padding: 0 8px 0 0;
+        margin: 0 auto;
+        width: auto;
+        max-width: 584px;
+        padding-top: 6px;
+        position: relative;
 
         #search-bar{
             display: flex;
-            position: relative;
             min-height: 44px;
             background: #fff;
             border-radius: 24px;
+            border: 1px solid #dfe1e5;
             box-shadow: 0 2px 8px 0 rgba(60, 64, 67, 0.25);
+            z-index: 3;
+            position: relative;
             margin: 0 auto;
             width: auto;
             max-width: 584px;
+            padding: 0 8px 0 0;
         }
+
         #search-bar:hover{
             background: #fff;
             box-shadow: 0 2px 8px 1px rgba(64,60,67,.24);
             border-color: transparent;
         }
-
         #search-bar .search-icon{
             display: flex;
-            justify-content: center;
             align-items: center;
             padding-right: 13px;
             padding-left: 14px;
-            margin-top: 0;
-            height: 52px;
-            width: 40px;
-        }
+            height: 46px;
 
-        #search-bar .search-icon span {
-            display: flex;
-            align-items: center;
-            width: 20px;
-            height: 20px;
-            color: #9aa0a6;;
+            span{
+                font-size: 20px;
+                color: #9aa0a6;
+            }
         }
 
         .search-input {
@@ -153,14 +174,56 @@ body {
             background: none;
             font-size: 16px;
             outline: none;
-            padding: 10px;
+            font-family: Arial,sans-serif;
+            line-height: 22px;
+            border-bottom: 8px solid transparent;
+            padding-top: 11px;
+            overflow-x: hidden;
+            flex: 1;
         }
 
-        #voice-image{
+        .voice-image-container {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            padding-right: 13px;
+            flex: 0 0 auto;
+            align-items: stretch;
+            flex-direction: row;
+            height: 44px;
+
+            #voice-image{
+                flex: 1 0 auto;
+                display: flex;
+                cursor: pointer;
+                align-items: center;
+                border: 0;
+                background: transparent;
+                outline: none;
+                padding: 0 8px;
+                line-height: 44px;
+
+                img{
+                    height: 24px;
+                    width: 24px;
+                    vertical-align: middle;
+                }
+            }
+
+            #lens{
+                flex: 1 0 auto;
+                display: flex;
+                cursor: pointer;
+                align-items: center;
+                border: 0;
+                background: transparent;
+                outline: none;
+                padding: 0 8px;
+                line-height: 44px;
+
+                img{
+                    height: 24px;
+                    width: 24px;
+                    vertical-align: middle;
+                }
+            }
         }
 
         .search-buttons{
@@ -168,7 +231,6 @@ body {
             padding-top: 18px;
 
             .button-1 {
-                width: 120px;
                 height: 36px;
                 text-align: center;
                 background-color: #f8f9fa;
@@ -204,7 +266,6 @@ body {
         }
         .search-buttons input:hover {
             box-shadow: 0 1px 1px rgba(0,0,0,.1);
-            background-color: #f8f9fa;
             border: 1px solid #dadce0;
             color: #202124;
         }
@@ -212,11 +273,10 @@ body {
 }
 
 #middle{
+    flex-grow: 1;
+    flex-shrink: 0;
     display: block;
-    width: 100%;
-    height: 408px;
-    justify-content: center;
-    font-size: 13px;
+    box-sizing: border-box;
 
     #language{
         font-size: small;
@@ -234,13 +294,17 @@ body {
 
 #footer{
     background-color: #f2f2f2;
+    box-sizing: border-box;
+    display: block;
+    flex-shrink: 0;
+    color: #1f1f1f;
+    font-size: 14px;
 }
 
 #footer-1 {
-    border-bottom: 1px solid #dadce0;
     color: #1f1f1f;
+    border-bottom: 1px solid #dadce0;
     padding: 15px 30px;
-    font-size: 15px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -250,35 +314,150 @@ body {
     display: flex;
     padding: 0 20px;
     justify-content: space-between;
-    font-family: Arial,sans-serif;
-    font-size: 14px;
-    color: #1f1f1f;
-    height: 46px;
+    flex-wrap: wrap;
 
-    #footer-left{
+    #footer-left {
         display: flex;
         flex-direction: row;
         align-items: center;
-        gap: 30px;
+        flex-wrap: wrap;
 
+        .footer-link {
+            padding: 15px;
+        }
     }
-    #footer-right{
+
+    #footer-right {
         display: flex;
         flex-direction: row;
         align-items: center;
-        gap: 30px;
+        flex-wrap: wrap;
+
+        .footer-link {
+            padding: 15px;
+        }
+    }
+
+    .footer-link {
+        text-decoration: none;
+        color: #1f1f1f;
+    }
+
+    .footer-link:hover {
+        text-decoration: underline;
     }
 }
 
-.footer {
+
+#viewport {
     width: 100%;
-    background: #000;
+    background: #df004e;
     color: #fff;
     text-align: center;
     padding: 15px 0;
     position: sticky;
     bottom: 0;
     left: 0;
+}
+
+@media only screen and (max-width: 1200px) {
+    #footer-2, #footer-left, #footer-right {
+        justify-content: space-evenly;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    *{
+        color: white;
+    }
+    body {
+        background: #202124;
+    }
+    #header a {
+        color: white;
+    }
+
+    #header .apps span{
+        color: white;
+    }
+
+    #container {
+        #google-logo img {
+            content: url('google_white.png');
+        }
+    }
+
+    #container-2 {
+        & #search {
+            #search-bar {
+                border: 1px solid transparent;
+                background: #4d5156;
+            }
+            #search-bar:hover {
+                background: #5f6368;
+                box-shadow: none;
+            }
+        }
+    }
+
+    .apps:hover{
+        opacity: 1;
+        cursor: pointer;
+        background-color: rgb(53, 53, 53);
+    }
+
+   .sign-in-button {
+       background: #c2e7ff;
+       color: #001d35;
+   }
+   .sign-in-button:hover {
+       background: #c2e7ff;
+       color: #001d35;
+       cursor: pointer;
+       -webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,.3),0 1px 3px 1px rgba(0,0,0,.15);
+       box-shadow: 0 1px 2px 0 rgba(0,0,0,.3),0 1px 3px 1px rgba(0,0,0,.15);
+   }
+
+    #container-2 {
+        & #search {
+            & .search-buttons {
+                .button-1, .button-2 {
+                    background-color: #303134;
+                    border: 1px solid #303134;
+                    color: #ffffff;
+                }
+
+                .button-1:hover, .button-2:hover {
+                    border: 1px solid #5f6368;
+                    color: #ffffff;
+                }
+            }
+        }
+   }
+
+    #language > span {
+    color: #bfbfbf;
+        & > a {
+            color: #99c3ff;
+            text-decoration: none;
+        }
+        & > a:hover {
+            text-decoration: underline;
+        }
+
+}
+
+   #footer {
+       background: #171717;
+
+       #footer-1{
+           border-bottom: 1px solid #313335;
+       }
+
+       #footer-1, #footer-2 *{
+           color: #e8e8e8
+       }
+   }
 }
 
 

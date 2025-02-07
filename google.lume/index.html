@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Google</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Material+Symbols|Material+Symbols+Outlined|Material+Symbols+Two+Tone|Material+Symbols+Round|Material+Symbols+Sharp" rel="stylesheet">
@@ -13,10 +14,10 @@
         <div id="header">
             <a class="gmail" href="https://mail.google.com/mail/u/0/?ogbl">Gmail</a>
             <a class="images" href="https://www.google.com/imghp?hl=en&tab=ve">Images</a>
-            <a class="search-labs" href="https://labs.google.com/search?source=hp&authuser=0">
+            <a class="apps" href="https://www.google.lk/intl/en/about/products" type="google apps">
                 <span class="material-icons material-symbols-outlined">apps</span>
             </a>
-            <a class="sign-in" href="https://accounts.google.com/v3/signin/identifier">
+            <a class="sign-in" href="https://accounts.google.com/ServiceLogin?hl=en&amp;passive=true&amp;continue=https://www.google.com/&amp;ec=GAZAmgQ" target="_top">
                 <button class="sign-in-button">Sign In</button>
             </a>
         </div>
@@ -35,9 +36,15 @@
                     <span class="material-icons material-symbols-outlined">search</span>
                 </div>
                 <input type="text" class="search-input">
-                <div id="voice-image">
-                    <span class="material-icons material-symbols-outlined">mic</span>
+                <div class="voice-image-container">
+                    <div id="voice-image">
+                        <img src="./img/mic.svg" alt="voice">
+                    </div>
+                    <div id="lens">
+                        <img src="./img/camera.svg" alt="lens">
+                    </div>
                 </div>
+
             </div>
             <div class="search-buttons">
                 <input class="button-1" value="Google Search" aria-label="Google Search" name="btnK" role="button" tabindex="0" type="submit" ></input>
@@ -58,20 +65,19 @@
         <div id="footer-1">Sri Lanka</div>
         <div id="footer-2">
             <div id="footer-left">
-                <menu>About</menu>
-                <menu>Advertising</menu>
-                <menu>Business</menu>
-                <menu>How Search works</menu>
+                <a class="footer-link" href="https://about.google/?utm_source=google-LK&amp;utm_medium=referral&amp;utm_campaign=hp-footer&amp;fg=1" ping="/url?sa=t&amp;rct=j&amp;source=webhp&amp;url=https://about.google/%3Futm_source%3Dgoogle-LK%26utm_medium%3Dreferral%26utm_campaign%3Dhp-footer%26fg%3D1&amp;ved=0ahUKEwjJvMHW8qyLAxUAZPUHHc_ZOtYQkNQCCCQ&amp;opi=89978449">About</a>
+                <a class="footer-link" href="https://www.google.com/intl/en_lk/ads/?subid=ww-ww-et-g-awa-a-g_hpafoot1_1!o2&amp;utm_source=google.com&amp;utm_medium=referral&amp;utm_campaign=google_hpafooter&amp;fg=1" ping="/url?sa=t&amp;rct=j&amp;source=webhp&amp;url=https://www.google.com/intl/en_lk/ads/%3Fsubid%3Dww-ww-et-g-awa-a-g_hpafoot1_1!o2%26utm_source%3Dgoogle.com%26utm_medium%3Dreferral%26utm_campaign%3Dgoogle_hpafooter%26fg%3D1&amp;ved=0ahUKEwjJvMHW8qyLAxUAZPUHHc_ZOtYQkdQCCCU&amp;opi=89978449">Advertising</a>
+                <a class="footer-link" href="https://www.google.com/services/?subid=ww-ww-et-g-awa-a-g_hpbfoot1_1!o2&amp;utm_source=google.com&amp;utm_medium=referral&amp;utm_campaign=google_hpbfooter&amp;fg=1" ping="/url?sa=t&amp;rct=j&amp;source=webhp&amp;url=https://www.google.com/services/%3Fsubid%3Dww-ww-et-g-awa-a-g_hpbfoot1_1!o2%26utm_source%3Dgoogle.com%26utm_medium%3Dreferral%26utm_campaign%3Dgoogle_hpbfooter%26fg%3D1&amp;ved=0ahUKEwjJvMHW8qyLAxUAZPUHHc_ZOtYQktQCCCY&amp;opi=89978449">Business</a>
+                <a class="footer-link __web-inspector-hide-shortcut__" href="https://google.com/search/howsearchworks/?fg=1"> How Search works </a>
             </div>
             <div id="footer-right">
-                <menu>Privacy</menu>
-                <menu>Terms</menu>
-                <menu>Settings</menu>
+                <a class="footer-link" href="https://policies.google.com/privacy?hl=en-LK&amp;fg=1" ping="/url?sa=t&amp;rct=j&amp;source=webhp&amp;url=https://policies.google.com/privacy%3Fhl%3Den-LK%26fg%3D1&amp;ved=0ahUKEwjJvMHW8qyLAxUAZPUHHc_ZOtYQ8awCCCc&amp;opi=89978449">Privacy</a>
+                <a class="footer-link" href="https://policies.google.com/terms?hl=en-LK&amp;fg=1" ping="/url?sa=t&amp;rct=j&amp;source=webhp&amp;url=https://policies.google.com/terms%3Fhl%3Den-LK%26fg%3D1&amp;ved=0ahUKEwi7x9OD9KyLAxWFka8BHYFYPf0Q8qwCCCg&amp;opi=89978449">Terms</a>
+                <a class="footer-link">Settings</a>
             </div>
         </div>
     </div>
-
-    <footer class="footer">
+    <footer id="viewport">
         <p>Made for experimental purposes only. All rights to logos and trademarks belong to Google.</p>
     </footer>
 </div>
