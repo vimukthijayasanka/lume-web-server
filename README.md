@@ -111,7 +111,7 @@ Pull requests are welcome. Please follow the standard GitHub **fork and PR workf
 
 ## 🏷️ Version
 
-1.0.0
+1.0.1
 
 ## 📜 License
 This project is open-source and licensed under the [**License**](https://github.com/vimukthijayasanka/lume-web-server/blob/main/license.txt).
